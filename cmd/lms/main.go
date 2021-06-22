@@ -1,17 +1,23 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/config"
-	"github.com/spf13/viper"
 	"log"
+	"os"
 )
 
 func main() {
-	err := config.NewConfig("./configs/config.yaml")
+	var path = flag.String("config", "", "Path to config file")
+	flag.Parse()
+	if *path == "" {
+		os.Exit(1)
+	}
+
+	c, err := config.NewConfig(*path)
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-	fmt.Println("Hello LMS")
-	fmt.Println(viper.Get("service.name"))
+	fmt.Println(c.Service.Name)
 }

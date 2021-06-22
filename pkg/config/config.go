@@ -4,7 +4,21 @@ import (
 	"github.com/spf13/viper"
 )
 
-func NewConfig(path string) error {
+type Config struct {
+	Service Service
+}
+
+type Service struct {
+	Name string `yaml:"name"`
+}
+
+func NewConfig(path string) (*Config, error) {
 	viper.SetConfigFile(path)
-	return viper.ReadInConfig()
+	err := viper.ReadInConfig()
+	if err != nil {
+		return nil, err
+	}
+	conf := new(Config)
+	err = viper.Unmarshal(conf)
+	return conf, err
 }
