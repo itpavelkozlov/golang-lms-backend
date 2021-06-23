@@ -1,2 +1,13 @@
 service:
   name: Pavel Kozlov
+
+  logger:
+    cores:
+      - file
+      - stdout
+#      - stderr
+    filename: tests/lmg.log
+    maxSize: 1024
+    maxBackups: 5
+    compress: true
+    level: debug
