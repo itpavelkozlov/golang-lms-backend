@@ -11,3 +11,8 @@
 ```bash
 go run cmd/lms/main.go --config ./configs/config.yaml
 ```
+
+```shell
+docker build --no-cache -t test -f ./build/Dockerfile .
+docker run -it test
+```
