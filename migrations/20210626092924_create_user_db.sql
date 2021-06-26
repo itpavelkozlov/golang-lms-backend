@@ -9,6 +9,7 @@ CREATE TABLE Users
     Password varchar(255) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
+    deleted_at TIMESTAMPTZ,
     constraint ID primary key (ID),
     constraint EmailUnique unique (Email),
     constraint EmailValid check (Email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
