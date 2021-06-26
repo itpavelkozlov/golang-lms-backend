@@ -17,3 +17,17 @@ docker build --no-cache -t test -f ./build/Dockerfile .
 # docker run -it test
 sudo docker compose -f deployments/docker-compose.yml up -d
 ```
+
+## Миграции
+- создать новую
+```bash
+make migrations-new NAME=<MIGRATION NAME>
+```
+- накатить текущие
+```bash
+make migrations-up
+```
+- откатить текущие
+```bash
+make migrations-down
+```
