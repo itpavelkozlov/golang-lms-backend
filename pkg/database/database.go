@@ -23,6 +23,6 @@ func NewDatabase(ctx context.Context, logger logger.Logger, config *config.Confi
 		logger.Error("Unable to connect to database", zap.Error(err))
 		return nil, err
 	}
-
+	logger.Info("Database connected", zap.String("host", config.Service.Database.Host), zap.String("port", config.Service.Database.Port))
 	return conn, nil
 }
