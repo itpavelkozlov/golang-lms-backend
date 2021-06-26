@@ -9,3 +9,6 @@ migrations-up:
 
 migrations-down:
 	goose -dir ./migrations  postgres "user=admin password=admin dbname=postgres sslmode=disable" down
+
+wire:
+	cd ./cmd/lms/wire && wire
