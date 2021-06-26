@@ -11,6 +11,8 @@ func InitializeApp(ctx context.Context, configPath string) (Application, error) 
 	wire.Build(
 		NewApplication,
 		pkgSet,
+		userSet,
+		serverSet,
 	)
 	return Application{}, nil
 }

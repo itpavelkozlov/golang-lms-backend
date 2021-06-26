@@ -1,13 +1,18 @@
 package wire
 
-import "github.com/jackc/pgx/v4"
+import (
+	"github.com/itpavelkozlov/golang-lms-backend/pkg/config"
+	"github.com/labstack/echo/v4"
+)
 
 type Application struct {
-	conn *pgx.Conn
+	Echo   *echo.Echo
+	Config *config.Config
 }
 
-func NewApplication(conn *pgx.Conn) Application {
+func NewApplication(echo *echo.Echo, Config *config.Config) Application {
 	return Application{
-		conn: conn,
+		Echo:   echo,
+		Config: Config,
 	}
 }

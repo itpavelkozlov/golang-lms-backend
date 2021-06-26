@@ -5,20 +5,18 @@ import (
 	"fmt"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/config"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/logger"
-	"github.com/jackc/pgx/v4"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"go.uber.org/zap"
 )
 
 func getDbUri(cfg config.Database) string {
-	// example: postgres://username:password@localhost:5432/database_name
-	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s", cfg.Username, cfg.Password, cfg.Host, cfg.Port, cfg.DBName)
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.Port, cfg.Username, cfg.Password, cfg.DBName, cfg.SSLMode)
 }
 
-func NewDatabase(ctx context.Context, logger logger.Logger, config *config.Config) (*pgx.Conn, error) {
+func NewDatabase(ctx context.Context, logger logger.Logger, config *config.Config) (*sqlx.DB, error) {
 
-	uri := getDbUri(config.Service.Database)
-
-	conn, err := pgx.Connect(ctx, uri)
+	conn, err := sqlx.Connect("postgres", getDbUri(config.Service.Database))
 	if err != nil {
 		logger.Error("Unable to connect to database", zap.Error(err))
 		return nil, err

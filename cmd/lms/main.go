@@ -16,8 +16,14 @@ func main() {
 	}
 
 	ctx := context.Background()
-	_, err := wire.InitializeApp(ctx, *path)
+	app, err := wire.InitializeApp(ctx, *path)
 	if err != nil {
 		log.Fatalf(fmt.Sprintf("error when app initializing: %s", err.Error()))
 	}
+
+	err = app.Echo.Start(fmt.Sprintf("%s:%s", app.Config.Service.Http.Host, app.Config.Service.Http.Port))
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
 }
