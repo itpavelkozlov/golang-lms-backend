@@ -1,5 +1,4 @@
 service:
-  name: Pavel Kozlov
 
   logger:
     cores:
@@ -11,3 +10,10 @@ service:
     maxBackups: 5
     compress: true
     level: debug
+
+  database:
+    dbname: postgres
+    username: admin
+    password: admin
+    host: localhost
+    port: 5432
