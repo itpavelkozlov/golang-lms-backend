@@ -11,6 +11,12 @@ type Config struct {
 type Service struct {
 	Logger   Logger
 	Database Database
+	Http     Http
+}
+
+type Http struct {
+	Host string
+	Port string
 }
 
 type Database struct {
@@ -19,6 +25,7 @@ type Database struct {
 	Username string
 	Password string
 	DBName   string
+	SSLMode  string
 }
 
 type Logger struct {
