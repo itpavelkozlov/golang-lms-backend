@@ -9,8 +9,16 @@ type Config struct {
 }
 
 type Service struct {
-	Name   string `yaml:"name"`
-	Logger Logger
+	Logger   Logger
+	Database Database
+}
+
+type Database struct {
+	Host     string
+	Port     string
+	Username string
+	Password string
+	DBName   string
 }
 
 type Logger struct {

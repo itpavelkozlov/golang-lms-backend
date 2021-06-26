@@ -1,10 +1,10 @@
 package main
 
 import (
+	"context"
 	"flag"
-	"github.com/itpavelkozlov/golang-lms-backend/pkg/config"
-	"github.com/itpavelkozlov/golang-lms-backend/pkg/logger"
-	"go.uber.org/zap"
+	"fmt"
+	"github.com/itpavelkozlov/golang-lms-backend/cmd/lms/wire"
 	"log"
 )
 
@@ -15,15 +15,9 @@ func main() {
 		log.Fatalf("Please, provide --config")
 	}
 
-	c, err := config.NewConfig(*path)
+	ctx := context.Background()
+	_, err := wire.InitializeApp(ctx, *path)
 	if err != nil {
-		log.Fatalf(err.Error())
+		log.Fatalf(fmt.Sprintf("error when app initializing: %s", err.Error()))
 	}
-
-	l, err := logger.NewLogger(c)
-	if err != nil {
-		log.Fatalf(err.Error())
-	}
-	l.Info("Hello World", zap.String("Name", c.Service.Name))
-
 }
