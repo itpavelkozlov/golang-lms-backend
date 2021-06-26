@@ -1,11 +1,14 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/config"
+	"github.com/itpavelkozlov/golang-lms-backend/pkg/database"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/logger"
 	"go.uber.org/zap"
 	"log"
+	"os"
 )
 
 func main() {
@@ -24,6 +27,12 @@ func main() {
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-	l.Info("Hello World", zap.String("Name", c.Service.Name))
+
+	_, err = database.NewDatabase(context.Background(), l, c)
+	if err != nil {
+		os.Exit(1)
+	}
+
+	l.Info("Database connected", zap.String("host", c.Service.Database.Host), zap.String("port", c.Service.Database.Port))
 
 }
