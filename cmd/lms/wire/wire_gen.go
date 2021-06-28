@@ -27,7 +27,7 @@ func InitializeApp(ctx context.Context, configPath string) (Application, error) 
 	if err != nil {
 		return Application{}, err
 	}
-	db, err := database.NewDatabase(ctx, loggerLogger, configConfig)
+	db, err := database.NewDatabase(loggerLogger, configConfig)
 	if err != nil {
 		return Application{}, err
 	}
@@ -35,6 +35,6 @@ func InitializeApp(ctx context.Context, configPath string) (Application, error) 
 	userUsecase := usecase.NewUserUsecase(userRepository)
 	userHandler := http.NewUserHandler(userUsecase, loggerLogger)
 	echo := server.NewHttpServer(userHandler)
-	application := NewApplication(echo, configConfig)
+	application := NewApplication(echo, configConfig, loggerLogger)
 	return application, nil
 }
