@@ -8,14 +8,15 @@
 - Documentation: [Notion](https://www.notion.so/Backend-docs-20a877f80e824dad962fecd948f20a2f)
 
 # Запуск
+
+### Локально
 ```bash
 go run cmd/lms/main.go --config ./configs/config.yaml
 ```
 
+### Docker
 ```shell
-docker build --no-cache -t test -f ./build/Dockerfile .
-# docker run -it test
-sudo docker compose -f deployments/docker-compose.yml up -d
+docker compose up -d
 ```
 
 ## Миграции
