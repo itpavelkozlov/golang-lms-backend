@@ -1,8 +1,9 @@
 # builder image
-FROM golang:1.16-alpine as builder
+FROM golang:1.16 as builder
 RUN mkdir /lms
 ADD . /lms
 WORKDIR /lms
+RUN apt install make gcc && go get github.com/google/wire/cmd/wire && make wire
 RUN go build -o lms ./cmd/lms/main.go
 
 

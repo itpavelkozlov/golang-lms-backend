@@ -12,3 +12,6 @@ migrations-down:
 
 wire:
 	cd ./cmd/lms/wire && wire
+
+run:
+	go run ./cmd/lms/main.go --config ./configs/config.yaml

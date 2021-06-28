@@ -10,8 +10,13 @@
 # Запуск
 
 ### Локально
+- генерация зависимостей
 ```bash
-go run cmd/lms/main.go --config ./configs/config.yaml
+make wire
+```
+- запуск
+```shell
+make run
 ```
 
 ### Docker
