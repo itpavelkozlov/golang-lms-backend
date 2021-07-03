@@ -13,6 +13,7 @@ func InitializeApp(ctx context.Context, configPath string) (Application, error) 
 		pkgSet,
 		userSet,
 		serverSet,
+		authSet,
 	)
 	return Application{}, nil
 }

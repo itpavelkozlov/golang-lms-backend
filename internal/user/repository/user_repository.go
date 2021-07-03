@@ -21,6 +21,6 @@ func (p userRepository) GetByID(ctx context.Context, id string) (*domain.User, e
 	return user, nil
 }
 
-func NewPostgresUserRepository(conn *sqlx.DB, logger logger.Logger) domain.UserRepository {
+func NewUserRepository(conn *sqlx.DB, logger logger.Logger) domain.UserRepository {
 	return &userRepository{conn, logger}
 }

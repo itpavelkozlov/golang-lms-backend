@@ -7,6 +7,9 @@ package wire
 
 import (
 	"context"
+	delivery2 "github.com/itpavelkozlov/golang-lms-backend/internal/auth/delivery"
+	repository2 "github.com/itpavelkozlov/golang-lms-backend/internal/auth/repository"
+	service2 "github.com/itpavelkozlov/golang-lms-backend/internal/auth/service"
 	"github.com/itpavelkozlov/golang-lms-backend/internal/server"
 	"github.com/itpavelkozlov/golang-lms-backend/internal/user/delivery"
 	"github.com/itpavelkozlov/golang-lms-backend/internal/user/repository"
@@ -31,10 +34,13 @@ func InitializeApp(ctx context.Context, configPath string) (Application, error) 
 	if err != nil {
 		return Application{}, err
 	}
-	userRepository := repository.NewPostgresUserRepository(db, loggerLogger)
+	userRepository := repository.NewUserRepository(db, loggerLogger)
 	userService := service.NewUserService(userRepository)
-	userHandlers := delivery.NewUserHandler(userService, loggerLogger)
-	echo := server.NewHttpServer(userHandlers)
+	userHandlers := delivery.NewUserHandlers(userService, loggerLogger)
+	authRepository := repository2.NewAuthRepository(db, loggerLogger)
+	authService := service2.NewAuthService(authRepository)
+	authHandlers := delivery2.NewAuthHandlers(authService, loggerLogger)
+	echo := server.NewHttpServer(userHandlers, authHandlers)
 	application := NewApplication(echo, configConfig, loggerLogger)
 	return application, nil
 }

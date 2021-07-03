@@ -7,18 +7,18 @@ import (
 	"net/http"
 )
 
-type AuthHandler struct {
-	AuthUsecase domain.AuthUsecase
+type AuthHandlers struct {
+	AuthUsecase domain.AuthService
 	Logger      logger.Logger
 }
 
-func NewAuthHandler(a domain.AuthUsecase, logger logger.Logger) *AuthHandler {
-	return &AuthHandler{
+func NewAuthHandlers(a domain.AuthService, logger logger.Logger) *AuthHandlers {
+	return &AuthHandlers{
 		AuthUsecase: a,
 		Logger:      logger,
 	}
 }
 
-func (a *AuthHandler) Login(c echo.Context) error {
+func (a *AuthHandlers) Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, "hello")
 }

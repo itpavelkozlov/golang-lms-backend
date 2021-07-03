@@ -13,7 +13,7 @@ type UserHandlers struct {
 	Logger      logger.Logger
 }
 
-func NewUserHandler(u domain.UserService, logger logger.Logger) *UserHandlers {
+func NewUserHandlers(u domain.UserService, logger logger.Logger) *UserHandlers {
 	return &UserHandlers{
 		UserService: u,
 		Logger:      logger,

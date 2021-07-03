@@ -17,7 +17,7 @@ type Claims struct {
 	DeletedAt    *time.Time `json:"deleted_at" db:"deleted_at"`
 }
 
-type AuthUsecase interface {
+type AuthService interface {
 	GetNewClaims(ctx context.Context, auth *AuthRequest) (*Claims, error)
 	RefreshClaims(ctx context.Context, claims *Claims) (*Claims, error)
 	Logout(ctx context.Context, claims *Claims) error
