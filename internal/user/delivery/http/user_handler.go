@@ -40,6 +40,20 @@ func (a *UserHandler) GetByID(c echo.Context) error {
 	return c.JSON(http.StatusOK, u)
 }
 
+// Login will get accessToken by given username/password
+func (a *UserHandler) Login(c echo.Context) error {
+	id := c.Param("id")
+
+	ctx := c.Request().Context()
+
+	u, err := a.UserUsecase.GetByID(ctx, id)
+	if err != nil {
+		return c.JSON(getStatusCode(err), ResponseError{Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, u)
+}
+
 // Todo check on save
 func isRequestValid(m *domain.User) (bool, error) {
 	validate := validator.New()
