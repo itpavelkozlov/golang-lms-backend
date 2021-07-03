@@ -32,9 +32,9 @@ func InitializeApp(ctx context.Context, configPath string) (Application, error) 
 		return Application{}, err
 	}
 	userRepository := repository.NewPostgresUserRepository(db, loggerLogger)
-	userUsecase := service.NewUserService(userRepository)
-	userHandler := delivery.NewUserHandler(userUsecase, loggerLogger)
-	echo := server.NewHttpServer(userHandler)
+	userService := service.NewUserService(userRepository)
+	userHandlers := delivery.NewUserHandler(userService, loggerLogger)
+	echo := server.NewHttpServer(userHandlers)
 	application := NewApplication(echo, configConfig, loggerLogger)
 	return application, nil
 }
