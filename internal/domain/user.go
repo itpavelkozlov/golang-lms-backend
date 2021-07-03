@@ -16,12 +16,10 @@ type User struct {
 	FirstName string     `json:"first_name" db:"firstname"`
 }
 
-// UserUsecase represent the user's usecases
-type UserUsecase interface {
+type UserService interface {
 	GetByID(ctx context.Context, id string) (*User, error)
 }
 
-// UserRepository represent the users repository contract
 type UserRepository interface {
 	GetByID(ctx context.Context, id string) (*User, error)
 }

@@ -1,4 +1,4 @@
-package postgres
+package repository
 
 import (
 	"context"
@@ -7,12 +7,12 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type postgresUserRepository struct {
+type userRepository struct {
 	conn   *sqlx.DB
 	logger logger.Logger
 }
 
-func (p postgresUserRepository) GetByID(ctx context.Context, id string) (*domain.User, error) {
+func (p userRepository) GetByID(ctx context.Context, id string) (*domain.User, error) {
 	user := new(domain.User)
 	err := p.conn.Get(user, "select * from users where id = $1", id)
 	if err != nil {
@@ -21,7 +21,6 @@ func (p postgresUserRepository) GetByID(ctx context.Context, id string) (*domain
 	return user, nil
 }
 
-// NewPostgresUserRepository will create an object that represent the user.Repository interface
 func NewPostgresUserRepository(conn *sqlx.DB, logger logger.Logger) domain.UserRepository {
-	return &postgresUserRepository{conn, logger}
+	return &userRepository{conn, logger}
 }

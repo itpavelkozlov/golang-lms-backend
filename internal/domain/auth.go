@@ -17,14 +17,12 @@ type Claims struct {
 	DeletedAt    *time.Time `json:"deleted_at" db:"deleted_at"`
 }
 
-// AuthUsecase represent the auth usecases
 type AuthUsecase interface {
 	GetNewClaims(ctx context.Context, auth *AuthRequest) (*Claims, error)
 	RefreshClaims(ctx context.Context, claims *Claims) (*Claims, error)
 	Logout(ctx context.Context, claims *Claims) error
 }
 
-// AuthRepository represent the auth repository contract
 type AuthRepository interface {
 	UpdateSession(ctx context.Context, userId string) (*Claims, error)
 	CreateSession(ctx context.Context, userId string) (*Claims, error)
