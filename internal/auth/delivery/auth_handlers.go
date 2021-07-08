@@ -8,13 +8,13 @@ import (
 )
 
 type AuthHandlers struct {
-	AuthUsecase domain.AuthService
+	AuthService domain.AuthService
 	Logger      logger.Logger
 }
 
 func NewAuthHandlers(a domain.AuthService, logger logger.Logger) *AuthHandlers {
 	return &AuthHandlers{
-		AuthUsecase: a,
+		AuthService: a,
 		Logger:      logger,
 	}
 }
