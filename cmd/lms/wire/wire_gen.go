@@ -7,10 +7,13 @@ package wire
 
 import (
 	"context"
+	delivery2 "github.com/itpavelkozlov/golang-lms-backend/internal/auth/delivery"
+	repository2 "github.com/itpavelkozlov/golang-lms-backend/internal/auth/repository"
+	service2 "github.com/itpavelkozlov/golang-lms-backend/internal/auth/service"
 	"github.com/itpavelkozlov/golang-lms-backend/internal/server"
-	"github.com/itpavelkozlov/golang-lms-backend/internal/user/delivery/http"
-	"github.com/itpavelkozlov/golang-lms-backend/internal/user/repository/postgres"
-	"github.com/itpavelkozlov/golang-lms-backend/internal/user/usecase"
+	"github.com/itpavelkozlov/golang-lms-backend/internal/user/delivery"
+	"github.com/itpavelkozlov/golang-lms-backend/internal/user/repository"
+	"github.com/itpavelkozlov/golang-lms-backend/internal/user/service"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/config"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/database"
 	"github.com/itpavelkozlov/golang-lms-backend/pkg/logger"
@@ -31,10 +34,13 @@ func InitializeApp(ctx context.Context, configPath string) (Application, error) 
 	if err != nil {
 		return Application{}, err
 	}
-	userRepository := postgres.NewPostgresUserRepository(db, loggerLogger)
-	userUsecase := usecase.NewUserUsecase(userRepository)
-	userHandler := http.NewUserHandler(userUsecase, loggerLogger)
-	echo := server.NewHttpServer(userHandler)
+	userRepository := repository.NewUserRepository(db, loggerLogger)
+	userService := service.NewUserService(userRepository)
+	userHandlers := delivery.NewUserHandlers(userService, loggerLogger)
+	authRepository := repository2.NewAuthRepository(db, loggerLogger)
+	authService := service2.NewAuthService(authRepository)
+	authHandlers := delivery2.NewAuthHandlers(authService, loggerLogger)
+	echo := server.NewHttpServer(userHandlers, authHandlers)
 	application := NewApplication(echo, configConfig, loggerLogger)
 	return application, nil
 }
